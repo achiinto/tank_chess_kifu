@@ -1,6 +1,22 @@
 # app.py
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+# set optional bootswatch theme
+app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+db = SQLAlchemy(app)
+
+from models import Kifu
+
+admin = Admin(app, name='Kifu admin', template_mode='bootstrap3')
+admin.add_view(ModelView(Kifu, db.session))
+
+
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
@@ -45,7 +61,3 @@ def post_something():
 @app.route('/')
 def index():
     return "<h1>Welcome to Tank Chess Kifu!!</h1>"
-
-if __name__ == '__main__':
-    # Threaded option to enable multiple instances for multiple user access support
-    app.run(threaded=True, port=5000)
