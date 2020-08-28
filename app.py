@@ -28,6 +28,9 @@ admin.add_view(ModelView(Kifu, db.session))
 current_kifu = None
 current_step = 0
 tank_positions = [{}]
+SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
+
+
 
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():
@@ -46,4 +49,12 @@ def index():
     # call a service to create the setup of board and pieces at the specific stage. using the cache
     # set the cache with these
     # let the page to render the board and tank. given the object.
-    return "<h1>Welcome to Tank Chess Kifu!!</h1>"
+    if action == 'PREVIOUS':
+        current_step = current_step - 1
+    elif action == 'NEXT':
+        current_step = current_step + 1
+    elif action == 'START':
+        current_step = 0
+    else:
+        current_step = current_step
+    return tank_positions[current_step]

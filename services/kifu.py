@@ -5,4 +5,4 @@ class KifuLoader:
     def load(self):
         # get the initial state of the board
         # render each state of the board for each steps
-        return [{"a": 123}]
+        return [{"a": 123}, {"b": 234}]
