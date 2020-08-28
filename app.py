@@ -58,5 +58,9 @@ def index():
         current_step = 0
     else:
         current_step = current_step
-    result = tank_positions[current_step]
+    try:
+        result = tank_positions[current_step]
+    except:
+        current_step = 0
+        result = tank_positions[current_step]
     return render_template('index.html', game_id=game_id)
