@@ -36,9 +36,8 @@ SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
 def load_kifu():
     kifu_id = request.args.get("id", None)
     current_kifu = Kifu.query.filter_by(id=kifu_id).first()
+    global tank_positions
     tank_positions = KifuLoader(current_kifu).load()
-    # call a service to create the setup of board and pieces
-    # Set the cache with these.
     response = {"kifu_id": kifu_id, "tank_positions": tank_positions}
     return jsonify(response)
 
@@ -49,6 +48,8 @@ def index():
     # call a service to create the setup of board and pieces at the specific stage. using the cache
     # set the cache with these
     # let the page to render the board and tank. given the object.
+    global current_step
+    global tank_positions
     if action == 'PREVIOUS':
         current_step = current_step - 1
     elif action == 'NEXT':
