@@ -22,14 +22,15 @@
             <table>
             {% for x in range(16): %}
                 <tr>
-                    {% for y in range(16): %}
+                {% for y in range(16): %}
                     <td>X: {{ x }} Y: {{ y }}</td>
-                    {%endfor%}
+                {%endfor%}
                 </tr>
             {%endfor%} 
-            </table>>
+            </table>
         {% else %}
         <p>No game loaded</p>
+        <a href="/load_kifu?id=1">Game 1</a>
         {% endif %}
     </body>
 </html>
