@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -41,7 +41,7 @@ def load_kifu():
     game_id = kifu_id
     tank_positions = KifuLoader(current_kifu).load()
     response = {"kifu_id": kifu_id, "tank_positions": tank_positions}
-    return jsonify(response)
+    return redirect("/", code=303)
 
 # A welcome message to test our server
 @app.route('/')
