@@ -18,52 +18,32 @@ app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 db = SQLAlchemy(app)
 
 from models import Kifu
+from services.kifu import KifuLoader
 
 admin = Admin(app, name='Kifu admin', template_mode='bootstrap3')
 admin.add_view(ModelView(Kifu, db.session))
 
 
+# As single cache layer
+current_kifu = None
+current_step = 0
+tank_positions = [{}]
 
-@app.route('/getmsg/', methods=['GET'])
-def respond():
-    # Retrieve the name from url parameter
-    name = request.args.get("name", None)
-
-    # For debugging
-    print(f"got name {name}")
-
-    response = {}
-
-    # Check if user sent a name at all
-    if not name:
-        response["ERROR"] = "no name found, please send a name."
-    # Check if the user entered a number not a name
-    elif str(name).isdigit():
-        response["ERROR"] = "name can't be numeric."
-    # Now the user entered a valid name
-    else:
-        response["MESSAGE"] = f"Welcome {name} to our awesome platform!!"
-
-    # Return the response in json format
+@app.route('/load_kifu/', methods=['GET'])
+def load_kifu():
+    kifu_id = request.args.get("id", None)
+    current_kifu = Kifu.query.filter_by(id=kifu_id).first()
+    tank_positions = KifuLoader(current_kifu).load()
+    # call a service to create the setup of board and pieces
+    # Set the cache with these.
+    response = {"kifu_id": kifu_id, "tank_positions": tank_positions}
     return jsonify(response)
-
-@app.route('/post/', methods=['POST'])
-def post_something():
-    param = request.form.get('name')
-    print(param)
-    # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
-    if param:
-        return jsonify({
-            "Message": f"Welcome {name} to our awesome platform!!",
-            # Add this option to distinct the POST request
-            "METHOD" : "POST"
-        })
-    else:
-        return jsonify({
-            "ERROR": "no name found, please send a name."
-        })
 
 # A welcome message to test our server
 @app.route('/')
 def index():
+    action = request.args.get("action", None) # forwrad or backward or specific step??
+    # call a service to create the setup of board and pieces at the specific stage. using the cache
+    # set the cache with these
+    # let the page to render the board and tank. given the object.
     return "<h1>Welcome to Tank Chess Kifu!!</h1>"
