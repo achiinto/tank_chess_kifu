@@ -1,16 +1,35 @@
 <!doctype html>
-<title>Tank Chess Kifu</title>
-<h1>Tank Game Kifu {{ game_id }}!</h1>
-{% if game_id != 0 %}
-    <table>
-    {% for x in range(16): %}
-        <tr>
-            {% for y in range(16): %}
-            <td>X: {{ y }} Y: {{ y }}</td>
-            {%endfor%}
-         </tr>
-    {%endfor%} 
-    </table>>
-{% else %}
-  <p>No game loaded</p>
-{% endif %}
+    <head>
+        <style>
+            table {
+                border: 1px solid black; 
+            }
+
+            tr {
+                height: 50px;
+            }
+
+            td {
+                width: 50px;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <title>Tank Chess Kifu</title>
+        <h1>Tank Game Kifu {{ game_id }}!</h1>
+        {% if game_id != 0 %}
+            <table>
+            {% for x in range(16): %}
+                <tr>
+                    {% for y in range(16): %}
+                    <td>X: {{ x }} Y: {{ y }}</td>
+                    {%endfor%}
+                </tr>
+            {%endfor%} 
+            </table>>
+        {% else %}
+        <p>No game loaded</p>
+        {% endif %}
+    </body>
+</html>
