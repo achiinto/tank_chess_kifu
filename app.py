@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -45,9 +45,6 @@ def load_kifu():
 @app.route('/')
 def index():
     action = request.args.get("action", None) # forwrad or backward or specific step??
-    # call a service to create the setup of board and pieces at the specific stage. using the cache
-    # set the cache with these
-    # let the page to render the board and tank. given the object.
     global current_step
     global tank_positions
     if action == 'PREVIOUS':
@@ -58,4 +55,5 @@ def index():
         current_step = 0
     else:
         current_step = current_step
-    return tank_positions[current_step]
+    result = tank_positions[current_step]
+    return render_template('index.html', name=result)
