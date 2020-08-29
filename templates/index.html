@@ -32,15 +32,27 @@
         <h1>Tank Game Kifu: {{ game_id }}, Step: {{ step }}</h1>
         {% if game_id != 0 %}
             <table>
-            {% for y in range(16): %}
+            {% for y in range(18): %}
                 <tr>
-                {% for x in range(16): %}
-                    {% if maps.get(y, {}).get(x) %}
-                        <td class="wall">y: {{ y }} x: {{ x }}</td>
+                {% for x in range(18): %}
+                    {% if y == 0 or y == 17 %}
+                        {% if x == 0 or x == 17 %}
+                            <td></td>
+                        {% else %}
+                            <td>{{ x }}</td>
+                        {% endif %}
+                    {% elif x == 0 or x == 17 %}
+                        {% if y == 0 or y == 17 %}
+                            <td></td>
+                        {% else %}
+                            <td>{{ y }}</td>
+                        {% endif %}
+                    {% elif maps.get(y, {}).get(x) %}
+                        <td class="wall"></td>
                     {% elif ((y + x) % 2) == 0: %}
-                        <td class="even_space">y: {{ y }} x: {{ x }}</td>
+                        <td class="even_space"></td>
                     {% else %}
-                        <td class="odd_space">y: {{ y }} x: {{ x }}</td>
+                        <td class="odd_space"></td>
                     {% endif %}
                 {%endfor%}
                 </tr>
