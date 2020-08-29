@@ -1,4 +1,5 @@
 # app.py
+import string
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
@@ -44,6 +45,7 @@ map_terrains = {2: {2:'b', 5:'b', 6:'b'},
 tank_positions = [{}]
 SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
 game_id = 0
+x_map_position_display = list(reversed(list(string.ascii_uppercase)[0:17]))
 
 
 @app.route('/load_kifu/', methods=['GET'])
@@ -65,6 +67,7 @@ def index():
     global tank_positions
     global game_id
     global map_terrains
+    global x_map_position_display
 
     if action == 'PREVIOUS':
         current_step = current_step - 1
@@ -80,4 +83,8 @@ def index():
     except:
         current_step = 0
         result = tank_positions[current_step]
-    return render_template('index.html', game_id=game_id, step=current_step, maps=map_terrains)
+    return render_template('index.html',
+                           game_id=game_id,
+                           step=current_step,
+                           maps=map_terrains,
+                           x_map_position_display=x_map_position_display)
