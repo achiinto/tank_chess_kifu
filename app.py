@@ -27,7 +27,20 @@ admin.add_view(ModelView(Kifu, db.session))
 # As single cache layer
 current_kifu = None
 current_step = 0
-map_terrains = {1: {2:'b'}}
+map_terrains = {1: {1:'b', 4:'b', 5:'b'},
+                2: {1:'b', 4:'b', 5:'b', 11:'b', 12:'b'},
+                3: {1:'b', 4:'b'},
+                4: {7:'b', 8:'b'},
+                5: {6:'b', 7:'b', 8:'b', 9:'b', 10:'b', 13:'b', 14:'b'},
+                6: {2:'b', 3:'b', 14:'b'},
+                7: {2:'b', 3:'b', 4:'b'},
+                8: {11:'b', 12:'b', 13:'b'},
+                9: {1:'b', 12:'b', 13:'b'},
+                10: {1:'b', 2:'b', 5:'b', 6:'b', 7:'b', 8:'b', 9:'b'},
+                11: {7:'b', 8:'b'},
+                12: {11:'b', 14:'b'},
+                13: {3:'b', 4:'b', 10:'b', 11:'b', 14:'b'},
+                14: {10:'b', 11:'b', 14:'b'}}
 tank_positions = [{}]
 SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
 game_id = 0
