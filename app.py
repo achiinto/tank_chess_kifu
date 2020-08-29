@@ -52,6 +52,7 @@ def index():
     global tank_positions
     global game_id
     global map_terrains
+
     if action == 'PREVIOUS':
         current_step = current_step - 1
     elif action == 'NEXT':
@@ -60,6 +61,7 @@ def index():
         current_step = 0
     else:
         current_step = current_step
+
     try:
         result = tank_positions[current_step]
     except:
