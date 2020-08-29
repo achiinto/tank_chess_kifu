@@ -25,8 +25,10 @@
                 {% for y in range(16): %}
                     {% if maps.get(x, {}).get(y) %}
                         <td style="background-color: black;">X: {{ x }} Y: {{ y }}</td>
+                    {% elif ((x + y) % 2) == 0: %}
+                        <td style="background-color: chocolate;">X: {{ x }} Y: {{ y }}</td>
                     {% else %}
-                        <td>X: {{ x }} Y: {{ y }}</td>
+                        <td style="background-color: cornsilk;">X: {{ x }} Y: {{ y }}</td>
                     {% endif %}
                 {%endfor%}
                 </tr>
