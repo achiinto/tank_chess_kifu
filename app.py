@@ -63,4 +63,4 @@ def index():
     except:
         current_step = 0
         result = tank_positions[current_step]
-    return render_template('index.html', game_id=game_id)
+    return render_template('index.html', game_id=game_id, step=current_step)

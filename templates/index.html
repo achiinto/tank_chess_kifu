@@ -17,7 +17,7 @@
     </head>
     <body>
         <title>Tank Chess Kifu</title>
-        <h1>Tank Game Kifu: {{ game_id }}</h1>
+        <h1>Tank Game Kifu: {{ game_id }}, Step: {{ step }}</h1>
         {% if game_id != 0 %}
             <table>
             {% for x in range(16): %}
@@ -28,7 +28,7 @@
                 </tr>
             {%endfor%} 
             </table>
-            <a href="/?action=NEXT">Next</a> / <a href="/?action=PREVIOUS">Previous</a> / <a href="?action=START">From Start</a>
+            <a href="/?action=PREVIOUS">Previous</a> / / <a href="?action=START">From Start</a> / / <a href="/?action=NEXT">Next</a>
         {% else %}
         <p>No game loaded</p>
         <a href="/load_kifu?id=1">Game 1</a>
