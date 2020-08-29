@@ -23,7 +23,11 @@
             {% for x in range(16): %}
                 <tr>
                 {% for y in range(16): %}
-                    <td>X: {{ x }} Y: {{ y }}</td>
+                    {% if maps.get(x, {}).get(y) %}
+                        <td style="background-color: black;">X: {{ x }} Y: {{ y }}</td>
+                    {% else %}
+                        <td>X: {{ x }} Y: {{ y }}</td>
+                    {% endif %}
                 {%endfor%}
                 </tr>
             {%endfor%} 

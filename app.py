@@ -27,6 +27,7 @@ admin.add_view(ModelView(Kifu, db.session))
 # As single cache layer
 current_kifu = None
 current_step = 0
+map_terrains = {1: {2:'b'}}
 tank_positions = [{}]
 SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
 game_id = 0
@@ -50,6 +51,7 @@ def index():
     global current_step
     global tank_positions
     global game_id
+    global map_terrains
     if action == 'PREVIOUS':
         current_step = current_step - 1
     elif action == 'NEXT':
@@ -63,4 +65,4 @@ def index():
     except:
         current_step = 0
         result = tank_positions[current_step]
-    return render_template('index.html', game_id=game_id, step=current_step)
+    return render_template('index.html', game_id=game_id, step=current_step, maps=map_terrains)
