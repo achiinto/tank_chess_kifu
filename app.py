@@ -80,7 +80,7 @@ def load_kifu():
     game_id = kifu_id
     tank_positions = KifuLoader(current_kifu).load()
     response = {"kifu_id": kifu_id, "tank_positions": tank_positions}
-    return redirect("/", code=303)
+    return redirect("/?action=START", code=303)
 
 @app.route('/')
 def index():
