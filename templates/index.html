@@ -24,10 +24,59 @@
                 background-color: cornsilk;
             }
 
+            .tank_div {
+                width: 50px;
+                height: 50px;
+            }
+
             .black_clt {
                 background-image: url('../static/images/black_clt.PNG');
                 background-size: 50px;
             }
+
+            .black_ht {
+                background-image: url('../static/images/black_ht.PNG');
+                background-size: 50px;
+            }
+
+            .black_mt {
+                background-image: url('../static/images/black_mt.PNG');
+                background-size: 50px;
+            }
+
+            .black_lt {
+                background-image: url('../static/images/black_lt.PNG');
+                background-size: 50px;
+            }
+
+            .white_clt {
+                background-image: url('../static/images/white_clt.PNG');
+                background-size: 50px;
+            }
+
+            .white_ht {
+                background-image: url('../static/images/white_ht.PNG');
+                background-size: 50px;
+            }
+
+            .white_mt {
+                background-image: url('../static/images/white_mt.PNG');
+                background-size: 50px;
+            }
+
+            .white_lt {
+                background-image: url('../static/images/white_lt.PNG');
+                background-size: 50px;
+            }
+
+            .north { -webkit-transform:rotate(0deg); }
+            .north_east {}
+            .east {}
+            .south_east {}
+            .south { -webkit-transform:rotate(180deg); }
+            .souht_west {}
+            .west {}
+            .north_east {}
         </style>
     </head>
     <body>
@@ -53,9 +102,9 @@
                     {% elif maps.feature(x, y) %}
                         <td class="wall"></td>
                     {% elif ((y + x) % 2) == 0: %}
-                        <td class="even_space {{ maps.tank(x, y) }}"></td>
+                        <td class="even_space"><div class="tank_div {{ maps.tank(x, y) }}"></div></td>
                     {% else %}
-                        <td class="odd_space"></td>
+                        <td class="odd_space"><div class="tank_div {{ maps.tank(x, y) }}"></div></td>
                     {% endif %}
                 {%endfor%}
                 </tr>
