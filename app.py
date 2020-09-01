@@ -6,7 +6,7 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db' 
 # heroku run python
 # >> import os
