@@ -24,29 +24,41 @@ from services.kifu import KifuLoader
 admin = Admin(app, name='Kifu admin', template_mode='bootstrap3')
 admin.add_view(ModelView(Kifu, db.session))
 
-
 # As single cache layer
 current_kifu = None
 current_step = 0
-map_terrains = {2: {2:'b', 5:'b', 6:'b'},
-                3: {2:'b', 5:'b', 6:'b', 12:'b', 13:'b'},
-                4: {2:'b', 5:'b'},
-                5: {8:'b', 9:'b'},
-                6: {7:'b', 8:'b', 9:'b', 10:'b', 11:'b', 14:'b', 15:'b'},
-                7: {3:'b', 4:'b', 15:'b'},
-                9: {3:'b', 4:'b', 5:'b'},
-                9: {12:'b', 13:'b', 14:'b'},
-                10: {2:'b', 13:'b', 14:'b'},
-                11: {2:'b', 3:'b', 6:'b', 7:'b', 8:'b', 9:'b', 10:'b'},
-                12: {8:'b', 9:'b'},
-                13: {12:'b', 15:'b'},
-                14: {4:'b', 5:'b', 11:'b', 12:'b', 15:'b'},
-                15: {11:'b', 12:'b', 15:'b'}}
+map_terrains = {"O2": 'b', "L2": 'b', "K2": 'b',
+                "O3": 'b', "L3": 'b', "K3": 'b', "E3": 'b', "D3": 'b',
+                "O4": 'b', "L4": 'b',
+                "I5": 'b', "H5": 'b',
+                "J6": 'b', "I6": 'b', "H6": 'b', "G6": 'b',"F6": 'b', "C6": 'b', "B6": 'b',
+                "N7": 'b', "M7": 'b', "B7": 'b',
+                "N8": 'b', "M8": 'b', "L8": 'b',
+                "E9": 'b', "D9": 'b', "C9": 'b',
+                "O10": 'b', "D10": 'b', "C10": 'b',
+                "O11": 'b', "N11": 'b', "K11": 'b', "J11": 'b',"I11": 'b', "H11": 'b', "G11": 'b',
+                "I12": 'b', "H12": 'b',
+                "E13": 'b', "B13": 'b',
+                "M14": 'b', "L14": 'b', "F14": 'b', "E14": 'b', "B14": 'b',
+                "F15": 'b', "E15": 'b', "B15": 'b',
+               }
 tank_positions = [{}]
 SUPPORTED_MAP_NAVI = ['NEXT', 'PREVIOUS', 'START', 'END']
 game_id = 0
 x_map_position_display = list(reversed(list(string.ascii_uppercase)[0:17]))
 
+def position_calculator(x, y):
+    # a bit reliance of the front-end
+    x_alpha = x_map_position_display[x]
+    return x_alpha + str(y)
+
+class MapLayout():
+    def __init__(self, map_dict):
+        self.map_dict = map_dict
+
+    def feature(self, x, y):
+        map_xy = position_calculator(x, y)
+        return self.map_dict.get(map_xy)
 
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():
@@ -86,5 +98,5 @@ def index():
     return render_template('index.html',
                            game_id=game_id,
                            step=current_step,
-                           maps=map_terrains,
+                           maps=MapLayout(map_terrains),
                            x_map_position_display=x_map_position_display)
