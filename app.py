@@ -59,6 +59,9 @@ class MapLayout():
     def feature(self, x, y):
         map_xy = position_calculator(x, y)
         return self.map_dict.get(map_xy)
+    
+    def tank(self, x, y):
+        return "black_clt"
 
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():

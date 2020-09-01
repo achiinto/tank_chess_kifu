@@ -6,12 +6,9 @@
                 border-collapse: collapse;
             }
 
-            tr {
-                height: 50px;
-            }
-
             td {
                 width: 50px;
+                height: 50px;
                 border: 1px solid black;
             }
 
@@ -27,8 +24,9 @@
                 background-color: cornsilk;
             }
 
-            .clt {
-                background-image: url('../static/images/black_ht.PNG');
+            .black_clt {
+                background-image: url('../static/images/black_clt.PNG');
+                background-size: 50px;
             }
         </style>
     </head>
@@ -55,7 +53,7 @@
                     {% elif maps.feature(x, y) %}
                         <td class="wall"></td>
                     {% elif ((y + x) % 2) == 0: %}
-                        <td class="even_space clt"></td>
+                        <td class="even_space {{ maps.tank(x, y) }}"></td>
                     {% else %}
                         <td class="odd_space"></td>
                     {% endif %}
