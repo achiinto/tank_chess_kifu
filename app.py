@@ -53,36 +53,44 @@ def position_calculator(x, y):
     return x_alpha + str(y)
 
 class MapLayout():
-    def __init__(self, map_dict):
+    def __init__(self, map_dict, tank_positions):
         self.map_dict = map_dict
+        self.tank_positions = tank_positions
 
     def feature(self, x, y):
         map_xy = position_calculator(x, y)
         return self.map_dict.get(map_xy)
     
     def tank(self, x, y, step=0):
-        return "black_clt south"
+        map_xy = position_calculator(x, y)
+        try:
+            timely_map = self.tank_positions[step]
+        except:
+            timely_map = {}
+        # return something like "black_clt south"
+        tank = timely_map.get(map_xy, None)
+        return tank.map_display() if tank else ""
 
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():
-    kifu_id = request.args.get("id", None)
-    current_kifu = Kifu.query.filter_by(id=kifu_id).first()
     global tank_positions
     global game_id
+    kifu_id = request.args.get("id", None)
+    current_kifu = Kifu.query.filter_by(id=kifu_id).first()
     game_id = kifu_id
     tank_positions = KifuLoader(current_kifu).load()
     response = {"kifu_id": kifu_id, "tank_positions": tank_positions}
     return redirect("/", code=303)
 
-# A welcome message to test our server
 @app.route('/')
 def index():
-    action = request.args.get("action", None) # forwrad or backward or specific step??
     global current_step
     global tank_positions
     global game_id
     global map_terrains
     global x_map_position_display
+    action = request.args.get("action", None)
+    map_layout = MapLayout(map_terrains, tank_positions)
 
     if action == 'PREVIOUS':
         current_step = current_step - 1
@@ -93,13 +101,8 @@ def index():
     else:
         current_step = current_step
 
-    try:
-        result = tank_positions[current_step]
-    except:
-        current_step = 0
-        result = tank_positions[current_step]
     return render_template('index.html',
                            game_id=game_id,
                            step=current_step,
-                           maps=MapLayout(map_terrains),
+                           maps=map_layout,
                            x_map_position_display=x_map_position_display)
