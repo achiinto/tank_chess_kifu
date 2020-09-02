@@ -45,26 +45,37 @@ class KifuLoader:
     def load(self):
         # render each state of the board for each steps
         pair_actions = self.kifu.record.split("\n")
-        pair_actions = pair_actions[0:4]
         for pair_action in pair_actions:
             # example: O8>N10/NW(H10+), K9>K8/SW
             actions = pair_action.split(", ")
             for action in actions:
                 # example: O8>N10/NW(H10+)
-                print("\n\naction: " + action)
-                start, end = action.split(">")
-                end_xy, end_extra = end.split("/")
-                end_direction = end_extra.split("(")[0].lower().strip()
-                print("\n\nEND DIRECION: " + end_direction)
-                # needed to handle end_extra: (H10+)
-                last_position = self.tank_positions[-1]
-                new_position = deepcopy(last_position)
-                if start:
-                    tank = last_position.get(start).copy()
-                    del new_position[start]
-                else:
-                    tank = last_position.get(end_xy).copy()
-                tank.direction = end_direction
-                new_position[end_xy] = tank
-                self.tank_positions.append(new_position)
+                self.__process_one_action(action)
         return self.tank_positions
+
+    def __process_one_action(self, action):
+        start, end = action.split(">")
+        end_xy, end_extra = end.split("/")
+        end_direction = end_extra.split("(")[0].lower().strip()
+        # needed to handle end_extra: (H10+)
+        try:
+            extra = end_extra.split("(")[1][:-1]
+            special = ('+', '#', '-', '=')
+            target = extra
+            special = None
+            if extra.endswith(special):
+                target = extra[:-1]
+                special = extra[-2]
+
+        last_position = self.tank_positions[-1]
+        new_position = deepcopy(last_position)
+        if start:
+            # example of moved: O8>N10/NW(H10+)
+            tank = last_position.get(start).copy()
+            del new_position[start]
+        else:
+            # example of not moved: >N10/NW(H10+)
+            tank = last_position.get(end_xy).copy()
+        tank.direction = end_direction
+        new_position[end_xy] = tank
+        self.tank_positions.append(new_position)
