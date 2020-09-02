@@ -71,6 +71,12 @@ class MapLayout():
         tank = timely_map.get(map_xy, None)
         return tank.map_display() if tank else ""
 
+    def special(self):
+        return self.map_dict.get("special")
+
+    def special_class(self):
+        return "check" if self.map_dict.get("special") else ""
+
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():
     global tank_positions

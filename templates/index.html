@@ -77,6 +77,13 @@
             .south_west { -webkit-transform:rotate(225deg); }
             .west { -webkit-transform:rotate(270deg); }
             .north_west { -webkit-transform:rotate(315deg); }
+
+            .destroyed { background-color: red; }
+            .check {
+                background-color: green;
+                width: 50px;
+                height: 50px;
+            }
         </style>
     </head>
     <body>
@@ -89,7 +96,7 @@
                 {% for x in range(18): %}
                     {% if y == 0 or y == 17 %}
                         {% if x == 0 or x == 17 %}
-                            <td></td>
+                            <td><div class="{{ maps.special_class() }}"></div>{{ maps.special() }}</div></td>
                         {% else %}
                             <td>{{ x_map_position_display[x] }}</td>
                         {% endif %}

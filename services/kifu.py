@@ -49,33 +49,49 @@ class KifuLoader:
             # example: O8>N10/NW(H10+), K9>K8/SW
             actions = pair_action.split(", ")
             for action in actions:
+                print("\n\nACTION: " + action + '//ACTIONS: ' + pair_action)
                 # example: O8>N10/NW(H10+)
-                self.__process_one_action(action)
+                self.__process_one_action(action.strip())
         return self.tank_positions
 
     def __process_one_action(self, action):
         start, end = action.split(">")
         end_xy, end_extra = end.split("/")
         end_direction = end_extra.split("(")[0].lower().strip()
+        special = None
+        target = None
         # needed to handle end_extra: (H10+)
         try:
             extra = end_extra.split("(")[1][:-1]
             special = ('+', '#', '-', '=')
             target = extra
-            special = None
             if extra.endswith(special):
                 target = extra[:-1]
                 special = extra[-2]
+        except:
+            pass
 
         last_position = self.tank_positions[-1]
         new_position = deepcopy(last_position)
         if start:
-            # example of moved: O8>N10/NW(H10+)
+            # example of moved: O8>N10/NW
             tank = last_position.get(start).copy()
             del new_position[start]
         else:
-            # example of not moved: >N10/NW(H10+)
+            # example of not moved: >N10/NW
             tank = last_position.get(end_xy).copy()
         tank.direction = end_direction
         new_position[end_xy] = tank
+
+        if target:
+            # example of moved: O8>N10/NW(H10)
+            print("\n\nTarget: " + target)
+            destroyed_tank = last_position.get(target)
+            if destroyed_tank:
+                destroyed_tank = destroyed_tank.copy()
+                destroyed_tank.destroyed = True
+                new_position[target] = destroyed_tank
+
+        new_position["special"] = special
+
         self.tank_positions.append(new_position)
