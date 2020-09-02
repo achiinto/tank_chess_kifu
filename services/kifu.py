@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 class Tank():
     DIRECTION_REF = {'n': 'north', 'ne': 'north_east', 'e': 'east',
                      'se': 'south_east', 's': 'south', 'sw': 'south_west',
@@ -16,10 +18,13 @@ class Tank():
         return display + display_destroy
 
     def __direction_display(self):
-        return self.DIRECTION_REF.get(self.direction)
+        return self.DIRECTION_REF.get(self.direction, "")
 
     def __color_display(self):
         return 'black' if self.color == 'b' else 'white'
+
+    def copy(self):
+        return Tank(self.color, self.tank_type, self.direction)
 
 class KifuLoader:
     DEFAULT_START = {"H1": Tank('w', 'clt', 's'), "H3": Tank('w', 'mt', 's'),
@@ -38,7 +43,28 @@ class KifuLoader:
         self.tank_positions = [self.DEFAULT_START]
     
     def load(self):
-        # get the initial state of the board
         # render each state of the board for each steps
-        self.tank_positions.append({"A1": Tank('b', 'clt', 'nw')})
+        pair_actions = self.kifu.record.split("\n")
+        pair_actions = pair_actions[0:4]
+        for pair_action in pair_actions:
+            # example: O8>N10/NW(H10+), K9>K8/SW
+            actions = pair_action.split(", ")
+            for action in actions:
+                # example: O8>N10/NW(H10+)
+                print("\n\naction: " + action)
+                start, end = action.split(">")
+                end_xy, end_extra = end.split("/")
+                end_direction = end_extra.split("(")[0].lower().strip()
+                print("\n\nEND DIRECION: " + end_direction)
+                # needed to handle end_extra: (H10+)
+                last_position = self.tank_positions[-1]
+                new_position = deepcopy(last_position)
+                if start:
+                    tank = last_position.get(start).copy()
+                    del new_position[start]
+                else:
+                    tank = last_position.get(end_xy).copy()
+                tank.direction = end_direction
+                new_position[end_xy] = tank
+                self.tank_positions.append(new_position)
         return self.tank_positions
