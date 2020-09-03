@@ -110,7 +110,7 @@ def index():
     global game_id
     global map_terrains
     global x_map_position_display
-    action = request.args.get("action", None)
+    action = request.args.get("action", 'BASE')
     map_layout = MapLayout(map_terrains, tank_positions)
 
     if action == 'PREVIOUS':
@@ -119,8 +119,10 @@ def index():
         current_step = current_step + 1
     elif action == 'START':
         current_step = 0
-    else:
+    elif action == 'BASE':
         current_step = current_step
+    else:
+        current_step = int(action)
 
     return render_template('index.html',
                            game_id=game_id,

@@ -83,16 +83,26 @@
                 background-color: green;
             }
             .spcial_box {
-                width: 800px;
-                height: 50px;
+                width: 900px;
+                height: 20px;
             }
         </style>
     </head>
     <body>
         <title>Tank Chess Kifu</title>
         <h1>Tank Game Kifu: {{ game_id }}, Step: {{ step }} : {{ maps.action(step) }}</h1>
-        <div class="spcial_box {{ maps.special_class(step) }}">{{ maps.special(step) }}</div>
         {% if game_id != 0 %}
+            <div class="spcial_box {{ maps.special_class(step) }}">
+                <a href="/?action=PREVIOUS">Previous</a> / / 
+                <a href="/?action=START">From Start</a> / / 
+                <a href="/?action=NEXT">Next</a> / / 
+                <a href="/?action=10">10</a> / / 
+                <a href="/?action=20">20</a> / / 
+                <a href="/?action=30">30</a> / / 
+                <a href="/?action=40">40</a> / / 
+                <a href="/?action=50">50</a> / / 
+                {{ maps.special(step) }}
+            </div>
             <table>
             {% for y in range(18): %}
                 <tr>
@@ -124,7 +134,6 @@
                 </tr>
             {%endfor%} 
             </table>
-            <a href="/?action=PREVIOUS">Previous</a> / / <a href="?action=START">From Start</a> / / <a href="/?action=NEXT">Next</a>
         {% else %}
         <p>No game loaded</p>
         <a href="/load_kifu?id=1">Game 1</a>
