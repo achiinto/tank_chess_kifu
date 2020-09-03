@@ -52,6 +52,16 @@ def position_calculator(x, y):
     x_alpha = x_map_position_display[x]
     return x_alpha + str(y)
 
+class NotTank():
+    def __init__(self):
+        pass
+
+    def map_display(self):
+        return ""
+
+    def tile_display(self):
+        return ""
+
 class MapLayout():
     def __init__(self, map_dict, tank_positions):
         self.map_dict = map_dict
@@ -68,8 +78,8 @@ class MapLayout():
         except:
             timely_map = {}
         # return something like "black_clt south"
-        tank = timely_map.get(map_xy, None)
-        return tank.map_display() if tank else ""
+        tank = timely_map.get(map_xy, NotTank())
+        return tank
 
     def special(self):
         return self.map_dict.get("special")

@@ -14,8 +14,11 @@ class Tank():
     def map_display(self):
         display = self.__color_display() + "_" + self.tank_type
         display = display + " " + self.__direction_display()
+        return display
+
+    def tile_display(self):
         display_destroy = " destroyed" if self.destroyed else ""
-        return display + display_destroy
+        return display_destroy
 
     def __direction_display(self):
         return self.DIRECTION_REF.get(self.direction, "")

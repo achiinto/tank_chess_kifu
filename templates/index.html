@@ -109,9 +109,13 @@
                     {% elif maps.feature(x, y) %}
                         <td class="wall"></td>
                     {% elif ((y + x) % 2) == 0: %}
-                        <td class="even_space"><div class="tank_div {{ maps.tank(x, y, step) }}"></div></td>
+                        <td class="even_space {{ maps.tank(x, y, step).tile_display() }}">
+                            <div class="tank_div {{ maps.tank(x, y, step).map_display() }}"></div>
+                        </td>
                     {% else %}
-                        <td class="odd_space"><div class="tank_div {{ maps.tank(x, y, step) }}"></div></td>
+                        <td class="odd_space {{ maps.tank(x, y, step).tile_display() }}">
+                            <div class="tank_div {{ maps.tank(x, y, step).map_display() }}"></div>
+                        </td>
                     {% endif %}
                 {%endfor%}
                 </tr>
