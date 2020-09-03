@@ -66,11 +66,11 @@ class KifuLoader:
         # needed to handle end_extra: (H10+)
         try:
             extra = end_extra.split("(")[1][:-1]
-            special = ('+', '#', '-', '=')
+            special_text = ('+', '#', '-', '=')
             target = extra
-            if extra.endswith(special):
+            if extra.endswith(special_text):
                 target = extra[:-1]
-                special = extra[-2]
+                special = extra[-1]
         except:
             pass
 

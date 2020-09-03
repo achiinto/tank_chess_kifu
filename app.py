@@ -81,11 +81,11 @@ class MapLayout():
         tank = timely_map.get(map_xy, NotTank())
         return tank
 
-    def special(self):
-        return self.map_dict.get("special")
+    def special(self, step=0):
+        return self.tank_positions[step].get("special")
 
-    def special_class(self):
-        return "check" if self.map_dict.get("special") else ""
+    def special_class(self, step=0):
+        return "check" if self.tank_positions[step].get("special") else ""
 
 @app.route('/load_kifu/', methods=['GET'])
 def load_kifu():

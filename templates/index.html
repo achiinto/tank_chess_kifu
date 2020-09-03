@@ -96,7 +96,9 @@
                 {% for x in range(18): %}
                     {% if y == 0 or y == 17 %}
                         {% if x == 0 or x == 17 %}
-                            <td><div class="{{ maps.special_class() }}"></div>{{ maps.special() }}</div></td>
+                            <td>
+                                <div class="{{ maps.special_class(step) }}">{{ maps.special(step) }}</div>
+                            </td>
                         {% else %}
                             <td>{{ x_map_position_display[x] }}</td>
                         {% endif %}
