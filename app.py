@@ -81,8 +81,13 @@ class MapLayout():
         tank = timely_map.get(map_xy, NotTank())
         return tank
 
+    def action(self, step=0):
+        return self.tank_positions[step].get("action")
+
     def special(self, step=0):
-        return self.tank_positions[step].get("special")
+        mapping = {"+": "CHECK", "#": "CHECKMATE",
+                   "-": "ESCAPE", "=": "ESCAPEMATE"}
+        return mapping.get(self.tank_positions[step].get("special"), "")
 
     def special_class(self, step=0):
         return "check" if self.tank_positions[step].get("special") else ""

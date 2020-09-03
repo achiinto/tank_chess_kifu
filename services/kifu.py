@@ -96,5 +96,6 @@ class KifuLoader:
                 new_position[target] = destroyed_tank
 
         new_position["special"] = special
+        new_position["action"] = action
 
         self.tank_positions.append(new_position)
