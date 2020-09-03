@@ -58,7 +58,7 @@ class KifuLoader:
         return self.tank_positions
 
     def __process_one_action(self, action):
-        start, end = action.split(">")
+        start_xy, end = action.split(">")
         end_xy, end_extra = end.split("/")
         end_direction = end_extra.split("(")[0].lower().strip()
         special = None
@@ -76,10 +76,10 @@ class KifuLoader:
 
         last_position = self.tank_positions[-1]
         new_position = deepcopy(last_position)
-        if start:
+        if start_xy:
             # example of moved: O8>N10/NW
-            tank = last_position.get(start).copy()
-            del new_position[start]
+            tank = last_position.get(start_xy).copy()
+            del new_position[start_xy]
         else:
             # example of not moved: >N10/NW
             tank = last_position.get(end_xy).copy()
@@ -97,5 +97,7 @@ class KifuLoader:
 
         new_position["special"] = special
         new_position["action"] = action
+        new_position["start"] = start_xy
+        new_position["end"] = end_xy
 
         self.tank_positions.append(new_position)

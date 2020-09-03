@@ -81,6 +81,20 @@ class MapLayout():
         tank = timely_map.get(map_xy, NotTank())
         return tank
 
+    def tile_start_end(self, x, y, step=0):
+        map_xy = position_calculator(x, y)
+        try:
+            timely_map = self.tank_positions[step]
+        except:
+            timely_map = {}
+        start = timely_map.get("start")
+        end = timely_map.get("end")
+        if start == map_xy:
+            return  "start_tile"
+        if end == map_xy:
+            return  "end_tile"
+        return ""
+
     def action(self, step=0):
         return self.tank_positions[step].get("action")
 

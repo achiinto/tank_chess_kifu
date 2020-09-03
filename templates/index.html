@@ -86,6 +86,8 @@
                 width: 900px;
                 height: 20px;
             }
+            .start_tile { background-color: grey; }
+            .end_tile { background-color: green; }
         </style>
     </head>
     <body>
@@ -122,11 +124,15 @@
                     {% elif maps.feature(x, y) %}
                         <td class="wall"></td>
                     {% elif ((y + x) % 2) == 0: %}
-                        <td class="even_space {{ maps.tank(x, y, step).tile_display() }}">
+                        <td class="even_space
+                                   {{ maps.tank(x, y, step).tile_display() }}
+                                   {{ maps.tile_start_end(x, y, step) }}">
                             <div class="tank_div {{ maps.tank(x, y, step).map_display() }}"></div>
                         </td>
                     {% else %}
-                        <td class="odd_space {{ maps.tank(x, y, step).tile_display() }}">
+                        <td class="odd_space
+                                   {{ maps.tank(x, y, step).tile_display() }}
+                                   {{ maps.tile_start_end(x, y, step) }}">
                             <div class="tank_div {{ maps.tank(x, y, step).map_display() }}"></div>
                         </td>
                     {% endif %}
